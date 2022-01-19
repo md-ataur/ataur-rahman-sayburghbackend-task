@@ -1,0 +1,15 @@
+<div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" name="title" id="title" value="<%= article.title %>" required>
+</div>
+<div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control" name="description" id="description" rows="3"><%= article.description %></textarea>
+</div>
+<div class="mb-3">
+    <label for="tags" class="form-label">Tags</label>
+    <input type="text" name="tags" value="<%= article.tags %>" class="form-control">
+    <small class="form-text text-muted">Separate keywords with a comma, space bar, or enter key</small>
+</div>
+<a href="/" class="btn btn-secondary">Back</a>
+<button type="submit" class="btn btn-primary">Save</button>
