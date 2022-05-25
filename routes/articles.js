@@ -1,42 +1,42 @@
 const express = require('express');
-const Article = require('./../models/article');
+const DB = require('../models/db');
 const router = express.Router();
 
 // New article form
 router.get('/new', (req, res) => {
-    res.render('articles/new', { article: new Article() });
+    res.render('posts/new', { article: new DB() });
 });
 
 // Edit article form
 router.get('/edit/:id', async (req, res) => {
-    const article = await Article.findById(req.params.id)
-    res.render('articles/edit', { article: article })
+    const article = await DB.findById(req.params.id);
+    res.render('posts/edit', { article: article });
 });
 
-// Get a single article by id
+// Get a single article by slug
 router.get('/:slug', async (req, res) => {
     // res.send(req.params.id);
-    const article = await Article.findOne({ slug: req.params.slug });
+    const article = await DB.findOne({ slug: req.params.slug });
     if (article === null) {
         res.redirect('/');
     }
-    res.render('articles/show', { article: article })
+    res.render('posts/show', { article: article });
 });
 
 // Insert article
 router.post('/', async (req, res) => {
     let tags = req.body.tags;
     let splitTags = tags.split(",");
-    let article = new Article({
+    let article = new DB({
         title: req.body.title,
         description: req.body.description,
         tags: splitTags
-    })
+    });
     try {
-        article = await article.save()
+        article = await article.save();
         res.redirect(`/`)
     } catch (e) {
-        res.render('articles/new', { article: article })
+        res.render('posts/new', { article: article });
     }
 });
 
@@ -44,22 +44,22 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     let tags = req.body.tags;
     let splitTags = tags.split(",");
-    let article = await Article.findById(req.params.id);
+    let article = await DB.findById(req.params.id);
     article.title = req.body.title
     article.description = req.body.description
     article.tags = splitTags
     try {
-        article = await article.save()
+        article = await article.save();
         res.redirect(`/`)
     } catch (e) {
-        res.render('articles/new', { article: article })
+        res.render('posts/new', { article: article });
     }
 });
 
 // Delete article
 router.delete('/:id', async (req, res) => {
-    await Article.findByIdAndDelete(req.params.id)
-    res.redirect('/')
+    await DB.findByIdAndDelete(req.params.id);
+    res.redirect('/');
 });
 
 module.exports = router;
