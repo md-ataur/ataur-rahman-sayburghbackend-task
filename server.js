@@ -1,8 +1,5 @@
 const express = require("express");
-const cookieParser = require("cookie-parser");
-const csrf = require("csurf");
 const bodyParser = require("body-parser");
-const admin = require("firebase-admin");
 const articleRouter = require('./routes/articles');
 const mongoose = require('mongoose');
 const DB = require('./models/db');
@@ -50,11 +47,6 @@ app.get('/login', async (req, res) => {
 // Sign Up
 app.get('/register', async (req, res) => {
     res.render('auth/register');
-});
-
-// profile page
-app.get('/profile', async (req, res) => {
-    res.render('profile');
 });
 
 // Port 5000

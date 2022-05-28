@@ -52,7 +52,7 @@ router.put('/:id', async (req, res) => {
         article = await article.save();
         res.redirect(`/`)
     } catch (e) {
-        res.render('posts/new', { article: article });
+        res.render('posts/edit', { error: e });
     }
 });
 
